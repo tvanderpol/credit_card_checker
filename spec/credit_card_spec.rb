@@ -25,5 +25,15 @@ describe CreditCard do
     cc = CreditCard.new(4111111111111111)
     cc.type.should eql 'Visa'
   end  
-
+  
+  it "should use the Luhn algorithm to determine number validity" do
+    CreditCard.new(378282246310005).should be_valid
+    CreditCard.new(6011111111111117).should be_valid
+    CreditCard.new(5105105105105100).should be_valid
+    CreditCard.new(4111111111111111).should be_valid
+    CreditCard.new(4012888888881881).should be_valid
+    CreditCard.new(4111111111111).should_not be_valid
+    CreditCard.new(5105105105105106).should_not be_valid
+    CreditCard.new(9111111111111111).should_not be_valid
+  end
 end

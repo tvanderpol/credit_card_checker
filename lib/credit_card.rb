@@ -5,7 +5,13 @@ class CreditCard
     @number = number
     @num_array = @number.to_s.scan(/\d/).map { |x| x.to_i }
     @type = "INVALID"
+    @valid = false
     set_type
+    validate_luhn
+  end
+  
+  def valid?
+    @valid
   end
   
   private
@@ -29,5 +35,16 @@ class CreditCard
       match = true if number == needle
     end
     return match
+  end
+  
+  def validate_luhn
+    # Double every odd number on reversed array:
+    to_sum = @num_array.reverse.each_with_index.map do |val, key|
+      key % 2 != 0 ? val  * 2 : val
+    end
+    # Make sure no double digit numbers exist in array, as we have to sum each digit:
+    to_sum = to_sum.to_s.scan(/\d/).map { |x| x.to_i }
+    # valid if sum is multiple of 10:
+    @valid = to_sum.inject(:+) % 10 == 0
   end
 end
