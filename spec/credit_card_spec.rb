@@ -25,4 +25,5 @@ describe CreditCard do
     cc = CreditCard.new(4111111111111111)
     cc.type.should eql 'Visa'
   end  
+
 end

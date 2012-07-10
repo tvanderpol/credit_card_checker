@@ -13,37 +13,21 @@ class CreditCard
   def set_type
     case @num_array.length
       when 13
-        validate_visa
+        @type = "Visa" if validate_type(@num_array[0], [4])
       when 15
-        validate_amex
+        @type = "AMEX" if validate_type(@num_array[0..1], [[3, 4], [3, 7]])
       when 16
-        validate_visa
-        validate_discover
-        validate_mastercard        
+        @type = "Visa" if validate_type(@num_array[0], [4])
+        @type = "Discover" if validate_type(@num_array[0..3], [[6,0,1,1]])
+        @type = "MasterCard" if validate_type(@num_array[0..1], [[5, 1], [5, 5]])
     end
   end
   
-  def validate_amex
-    validation_numbers = @num_array[0..1]
-    if validation_numbers == [3, 4] || validation_numbers == [3, 7]
-      @type = "AMEX" 
+  def validate_type(needle, haystack)
+    match = false
+    haystack.each do |number|
+      match = true if number == needle
     end
-  end
-  
-  def validate_discover
-    validation_numbers = @num_array[0..3]
-    @type = "Discover" if validation_numbers == [6,0,1,1]
-  end
-  
-  def validate_mastercard
-    validation_numbers = @num_array[0..1]
-    if validation_numbers == [5, 1] || validation_numbers == [5, 5]
-      @type = "MasterCard"
-    end
-  end
-
-  def validate_visa
-    validation_number = @num_array[0]
-    @type = "Visa" if validation_number == 4
+    return match
   end
 end
