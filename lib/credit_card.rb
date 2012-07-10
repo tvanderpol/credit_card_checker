@@ -2,9 +2,9 @@ class CreditCard
   attr_reader :number, :type
   
   def initialize(number)
-    @number = number
+    @number = number.to_s.gsub(/\s+/, "").to_i
     @num_array = @number.to_s.scan(/\d/).map { |x| x.to_i }
-    @type = "INVALID"
+    @type = "Unknown"
     @valid = false
     set_type
     validate_luhn

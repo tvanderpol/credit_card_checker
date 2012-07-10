@@ -1,9 +1,16 @@
 require_relative '../lib/main'
 
 describe CreditCard do
-  it "should take a Credit Card number as initial argument" do
+  it "should take a Credit Card number as initial argument either as int or as string" do
     cc = CreditCard.new(4111111111111111)
     cc.kind_of?(CreditCard).should be_true
+    cc = CreditCard.new("4111111111111111")
+    cc.kind_of?(CreditCard).should be_true
+  end
+  
+  it "should remove spaces from the number" do
+    cc = CreditCard.new("5105 1051 0510 5106")
+    cc.number.should eql 5105105105105106
   end
   
   it "should set type to AMEX when the number begins with 34 or 37 and is 15 digits long" do
