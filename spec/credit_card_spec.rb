@@ -8,6 +8,11 @@ describe CreditCard do
     cc.kind_of?(CreditCard).should be_true
   end
   
+  it "should not validate nonsense input" do
+    cc = CreditCard.new("A sentence is not a credit card number!")
+    cc.should_not be_valid
+  end
+  
   it "should remove spaces from the number" do
     cc = CreditCard.new("5105 1051 0510 5106")
     cc.number.should eql 5105105105105106

@@ -11,7 +11,7 @@ class CreditCard
   end
   
   def valid?
-    @valid
+    @luhn && @type != "Unknown"
   end
   
   private
@@ -45,6 +45,6 @@ class CreditCard
     # Make sure no double digit numbers exist in array, as we have to sum each digit:
     to_sum = to_sum.to_s.scan(/\d/).map { |x| x.to_i }
     # valid if sum is multiple of 10:
-    @valid = to_sum.inject(:+) % 10 == 0
+    @luhn = to_sum.inject(:+) % 10 == 0
   end
 end
