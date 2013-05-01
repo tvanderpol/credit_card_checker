@@ -1,4 +1,4 @@
-credit_card_checker
+Credit Card Checker
 ===================
 
-Great repository names are short and memorable. Need inspiration? How about finna-be-sansa.
+I wrote this as part of my application for Everyday Hero.
